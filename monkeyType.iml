@@ -7,5 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="googlecode.lanterna" level="application" />
+    <orderEntry type="library" name="acm" level="application" />
   </component>
 </module>
