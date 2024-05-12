@@ -7,7 +7,7 @@ recreating monkeytype for my y11 CS end of year project
 - [ ] change selection based on game playing mode (word limit or time limit)
 
 **printWords class**
-- [ ] print GLabel and splint lines
+- [x] print GLabel and splint lines
 - [ ] update new line
 - [ ] missing or extra characters
 - [ ] add timer
