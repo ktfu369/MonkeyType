@@ -1,4 +1,4 @@
-recreating monkeytype for my y11 CS end of year project
+y11 CS end of year project
 
 ## to do 
 **findWords class**
@@ -8,7 +8,7 @@ recreating monkeytype for my y11 CS end of year project
 
 **printWords class**
 - [x] print GLabel and splint lines
-- [ ] update new line
+- [x] update new line
 - [ ] missing or extra characters
 - [ ] add timer
 
