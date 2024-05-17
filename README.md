@@ -10,7 +10,7 @@ y11 CS end of year project
 - [x] print GLabel and splint lines
 - [x] update new line
 - [ ] missing or extra characters
-- [ ] add timer
+- [x] add timer
 
 **other**
 - [ ] high score table
