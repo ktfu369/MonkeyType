@@ -3,8 +3,14 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class findWords {
+    private static boolean isRandom, hasNumbers, hasPunctuation;
     private static String[] wordList = new String[500];
+
     public findWords(boolean isRandom, boolean hasNumbers, boolean hasPunctuation) throws FileNotFoundException {
+        this.isRandom = isRandom;
+        this.hasNumbers = hasNumbers;
+        this.hasPunctuation = hasPunctuation;
+
         wordList = new String[300];
         randomWords();
     }
@@ -15,15 +21,24 @@ public class findWords {
         Random rand = new Random();
 
         String[] wordArray = fileToArray("words.txt");
+        String[] puncArray = fileToArray("punctuation.txt");
 
         for(int i=1;i<=300;i++){
-            int randIndex = rand.nextInt(3000);
+            int randIndex = rand.nextInt(fileLength("words.txt"));
             wordList[i-1] = wordArray[randIndex];
+            if(hasPunctuation && i%12==0){
+                int randPunc = rand.nextInt(fileLength("punctuation.txt"));
+                wordList[i-1] += puncArray[randPunc];
+            }
+            if(hasNumbers && i%10 == 0){
+                int randNum = rand.nextInt(10000);
+                wordList[i-1] = "" +randNum;
+            }
         }
-
     }
 
     public static String[] getWords(){
+        System.out.println(wordList);
         return wordList;
     }
 

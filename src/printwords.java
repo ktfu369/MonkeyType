@@ -13,27 +13,50 @@ import java.util.Arrays;
 import java.util.Date;
 
 
-public class printwords  extends GraphicsProgram implements ActionListener {
-    private static ArrayList<GLabel>[] displayGrid = new ArrayList[500];
-    private static ArrayList<Character>[] wordGrid;
-    private static ArrayList<Character>[] curWordGrid = new ArrayList[3];
+public class printwords extends GraphicsProgram implements ActionListener  {
+    public static ArrayList<GLabel>[] displayGrid = new ArrayList[500];
+    public static ArrayList<Character>[] wordGrid;
+    public static ArrayList<Character>[] curWordGrid = new ArrayList[3];
+
+    private static GLabel time;
     int gridMax, curLine=0;
     int cursorX = 0, cursorY = 0;
 
     private static findWords findWord;
+
     static {
         try {
-            findWord = new findWords(true,true,true);
+            findWord = new findWords(true,false,false);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void run(){
+    private static int wordCnt=0;
+    private static int corChar = 0, incorChar = 0, extraChar = 0, missedChar = 0;
+
+    public void run() {
         this.resize(1000,600);
         wordGrid = sortGrid();
         showWords();
         addKeyListeners();
+        time = new GLabel("0");
+        time.setFont(new Font("Courier", Font.PLAIN, 24));
+        time.setColor(Color.GRAY);
+        add(time,160,170);
+        int cnt = 0;
+        while(cnt<=20){
+            time.setLabel(cnt+"");
+            cnt++;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println(wordCnt);
+        removeAll();
+//        exit();
     }
 
     // splits into lines with max of 50 characters
@@ -112,6 +135,16 @@ public class printwords  extends GraphicsProgram implements ActionListener {
         }
     }
 
+    public void remove(){
+//        removeKeyListener(getKeyListe);
+        for(int i=0;i<3;i++){
+            for(int j=0;j<displayGrid[i].size();j++){
+                remove(displayGrid[i].get(j));
+            }
+            displayGrid[i].clear();
+        }
+    }
+
     public void keyPressed(KeyEvent keyPressed){
         switch(keyPressed.getKeyCode()){
             case KeyEvent.VK_SHIFT:
@@ -125,6 +158,9 @@ public class printwords  extends GraphicsProgram implements ActionListener {
                 break;
             default:
                 String typed = keyPressed.getKeyChar()+"";
+                if(typed.equals(" ")){
+                    wordCnt++;
+                }
                 if(typed.equals(displayGrid[cursorY].get(cursorX).getLabel())){
                     displayGrid[cursorY].get(cursorX).setColor(Color.BLUE);
                 }else{
@@ -136,7 +172,6 @@ public class printwords  extends GraphicsProgram implements ActionListener {
                     curLine++;
                     cursorX=0;
                     if(cursorY==1){
-                        System.out.println("update");
                         updateLine(0);
                         updateLine(1);
                         newLine();
@@ -148,7 +183,7 @@ public class printwords  extends GraphicsProgram implements ActionListener {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         new printwords().start(args);
     }
 }
