@@ -27,8 +27,10 @@ public class typingTest{
     private static int corChar = 0, incorChar = 0, extraChar = 0, missedChar = 0;
 
 
-    public ArrayList<GLabel>[] setUpWords() throws FileNotFoundException {
-        findWord = new findWords(true,false,false);
+    public ArrayList<GLabel>[] setUpWords(boolean isRandom, boolean hasNumbers, boolean hasPunctuation) throws FileNotFoundException {
+       cursorX =0;
+       cursorY = 0;
+        findWord = new findWords(isRandom,hasNumbers,hasPunctuation);
         wordGrid = sortGrid();
         return showWords();
     }
