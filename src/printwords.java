@@ -26,7 +26,7 @@ public class printwords extends GraphicsProgram implements ActionListener  {
 
     static {
         try {
-            findWord = new findWords(true,false,false);
+            findWord = new findWords(true,false,true,false,1);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

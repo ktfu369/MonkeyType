@@ -27,10 +27,10 @@ public class typingTest{
     private static int corChar = 0, incorChar = 0, extraChar = 0, missedChar = 0;
 
 
-    public ArrayList<GLabel>[] setUpWords(boolean isRandom, boolean hasNumbers, boolean hasPunctuation) throws FileNotFoundException {
-       cursorX =0;
-       cursorY = 0;
-        findWord = new findWords(isRandom,hasNumbers,hasPunctuation);
+    public ArrayList<GLabel>[] setUpWords(boolean hasNumbers, boolean hasPunctuation, boolean hasTimer, boolean hasWords, int choice) throws FileNotFoundException {
+        cursorX =0;
+        cursorY = 0;
+        findWord = new findWords(hasNumbers,hasPunctuation,hasTimer,hasWords,choice);
         wordGrid = sortGrid();
         return showWords();
     }
@@ -50,6 +50,7 @@ public class typingTest{
         }
 
         int ypos = 0;
+        System.out.println(selectedWords);
         for(int i=0;i<selectedWords.length;i++){
             if(wordGrid[ypos].size() + selectedWords[i].length() >= 50){
                 ypos++;
@@ -107,12 +108,8 @@ public class typingTest{
         return wordCnt;
     }
 
-    public int getCursorX(){
-        return cursorX;
-    }
-
-    public int getCursorY(){
-        return cursorY;
+    public int getGridMax(){
+        return gridMax;
     }
 
     public void backspace(){

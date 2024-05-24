@@ -11,13 +11,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class controlPanel extends GraphicsProgram {
+    int gridLinesLeft;
     public static typingTest typingScreen;
 
     private static ArrayList<GLabel>[] displayGrid = new ArrayList[500];
     private static GLabel time;
     int timerCnt = 0;
-
-    boolean isRandom = true;
 
     private static JButton numButton;
     boolean hasNumbers = false;
@@ -31,14 +30,10 @@ public class controlPanel extends GraphicsProgram {
     private static JButton wordsButton;
     private boolean hasWords = false;
 
+    private static int menuChoice = 1;
     private static JButton oneButton;
-    private boolean hasOne = true;
-
     private static JButton twoButton;
-    private boolean hasTwo = false;
-
     private static JButton threeButton;
-    private boolean hasThree = false;
 
     private boolean hasTyped = false;
 //    private boolean hasPressed = false;
@@ -55,12 +50,11 @@ public class controlPanel extends GraphicsProgram {
     }
 
     public void run() {
-//        addActionListeners();
         addKeyListeners();
         setTitle("KType");
         this.resize(1000, 600);
-        setUpMenu();
 
+        setUpMenu();
         typingScreen = new typingTest();
         try {
             printWords();
@@ -70,6 +64,9 @@ public class controlPanel extends GraphicsProgram {
     }
 
     public void setUpMenu(){
+        // displays gray menu bar and buttons on top
+
+        System.out.println(hasWords+" "+menuChoice);
         hasTyped = false;
 
         GRoundRect rectMenu = new GRoundRect(700,30);
@@ -99,17 +96,17 @@ public class controlPanel extends GraphicsProgram {
         add(wordsButton,490,50);
 
         oneButton = new JButton("10");
-        setUpButton(oneButton,hasOne);
+        setUpButton(oneButton,menuChoice == 1);
         oneButton.setSize(60,30);
         add(oneButton,610,50);
 
         twoButton = new JButton("33");
-        setUpButton(twoButton,hasTwo);
+        setUpButton(twoButton,menuChoice == 2);
         twoButton.setSize(60,30);
         add(twoButton,670,50);
 
         threeButton = new JButton("66");
-        setUpButton(threeButton,hasThree);
+        setUpButton(threeButton,menuChoice == 3);
         threeButton.setSize(60,30);
         add(threeButton,730,50);
 
@@ -119,6 +116,8 @@ public class controlPanel extends GraphicsProgram {
     }
 
     public void setUpButton(JButton button,boolean isOn){
+        // default button settings
+
         button.setBackground(Color.darkGray);
         button.setOpaque(true);
         button.setBorderPainted(false);
@@ -130,12 +129,19 @@ public class controlPanel extends GraphicsProgram {
     }
 
     public void printWords() throws FileNotFoundException, InterruptedException {
-        System.out.println("printing" + hasPressed);
         addActionListeners();
-        displayGrid = typingScreen.setUpWords(isRandom,hasNumbers,hasPunc);
+
+        displayGrid = typingScreen.setUpWords(hasNumbers,hasPunc,hasTimer,hasWords,menuChoice);
+        gridLinesLeft = typingScreen.getGridMax();
+
         int x = 80, y = 200;
         int tlength = 0, twidth = 0;
-        for (int i = 0; i < 3; i++) {
+
+        int maxLine;
+        if(gridLinesLeft < 3) maxLine = gridLinesLeft;
+        else maxLine = 3;
+
+        for (int i = 0; i < maxLine; i++) {
             tlength = x;
             for (int j = 0; j < displayGrid[i].size(); j++) {
                 add(displayGrid[i].get(j), x + tlength, y + twidth);
@@ -228,9 +234,14 @@ public class controlPanel extends GraphicsProgram {
             default:
                 hasTyped = true;
                 if (typingScreen.typed(keyPressed.getKeyChar() + "")) {
-                    updateLine(0);
-                    updateLine(1);
-                    newLine();
+                    if(gridLinesLeft>1 ){
+                        updateLine(0);
+                        updateLine(1);
+
+                        newLine();
+                    }
+
+                    gridLinesLeft --;
                 }
         }
     }
@@ -281,6 +292,7 @@ public class controlPanel extends GraphicsProgram {
             hasPressed = true;
             hasTimer = false;
             hasWords = true;
+            System.out.println("haswords is " + hasWords);
             removeAll();
             setUpMenu();
             try {
@@ -292,9 +304,7 @@ public class controlPanel extends GraphicsProgram {
             }
         }else if(command.equals("10")){
             hasPressed = true;
-            hasOne = true;
-            hasTwo = false;
-            hasThree = false;
+            menuChoice = 1;
             removeAll();
             setUpMenu();
             try {
@@ -306,9 +316,7 @@ public class controlPanel extends GraphicsProgram {
             }
         }else if(command.equals("33")){
             hasPressed = true;
-            hasOne = false;
-            hasTwo = true;
-            hasThree = false;
+            menuChoice = 2;
             removeAll();
             setUpMenu();
             try {
@@ -320,9 +328,7 @@ public class controlPanel extends GraphicsProgram {
             }
         }else if(command.equals("66")){
             hasPressed = true;
-            hasOne = false;
-            hasTwo = false;
-            hasThree = true;
+            menuChoice = 3;
             removeAll();
             setUpMenu();
             try {
@@ -333,5 +339,10 @@ public class controlPanel extends GraphicsProgram {
                 throw new RuntimeException(ex);
             }
         }
+    }
+
+    public void endingPage(){
+        removeAll();
+        JButton end = new JButton();
     }
 }

@@ -3,15 +3,27 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class findWords {
-    private static boolean isRandom, hasNumbers, hasPunctuation;
-    private static String[] wordList = new String[500];
+    private static boolean hasNumbers, hasPunctuation;
+    private static boolean hasTimer, hasWords;
+    private static int choice;
+    private static int choices[] = {0,20,33,66};
 
-    public findWords(boolean isRandom, boolean hasNumbers, boolean hasPunctuation) throws FileNotFoundException {
-        this.isRandom = isRandom;
+    private static String[] wordList;
+
+
+    public findWords(boolean hasNumbers, boolean hasPunctuation, boolean hasTimer, boolean hasWords, int choice) throws FileNotFoundException {
         this.hasNumbers = hasNumbers;
         this.hasPunctuation = hasPunctuation;
+        this.hasTimer = hasTimer;
+        this.hasWords = hasWords;
+        this.choice = choice;
 
-        wordList = new String[300];
+        if(hasWords){
+            wordList = new String[choices[choice]];
+        }else{
+            wordList = new String[300];
+        }
+
         randomWords();
     }
 
@@ -23,7 +35,11 @@ public class findWords {
         String[] wordArray = fileToArray("words.txt");
         String[] puncArray = fileToArray("punctuation.txt");
 
-        for(int i=1;i<=300;i++){
+        int max;
+        if(hasWords) max = choices[choice];
+        else max = 300;
+
+        for(int i=1;i<=max;i++){
             int randIndex = rand.nextInt(fileLength("words.txt"));
             wordList[i-1] = wordArray[randIndex];
             if(hasPunctuation && i%12==0){
@@ -35,6 +51,7 @@ public class findWords {
                 wordList[i-1] = "" +randNum;
             }
         }
+        System.out.println(wordList.length);
     }
 
     public static String[] getWords(){
@@ -50,7 +67,6 @@ public class findWords {
         int cnt = 0;
         while (scanner.hasNextLine()) {
             array1[cnt++] = scanner.nextLine();
-//            System.out.println(array1[cnt-1]);
         }
         return array1;
     }
