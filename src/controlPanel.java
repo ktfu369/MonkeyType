@@ -2,6 +2,7 @@ import acm.graphics.GLabel;
 import acm.graphics.GRoundRect;
 import acm.program.GraphicsProgram;
 
+import javax.crypto.spec.PSource;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +25,25 @@ public class controlPanel extends GraphicsProgram {
     private static JButton punctButton;
     boolean hasPunc = false;
 
+    private static JButton timerButton;
+    private boolean hasTimer = true;
+
+    private static JButton wordsButton;
+    private boolean hasWords = false;
+
+    private static JButton oneButton;
+    private boolean hasOne = true;
+
+    private static JButton twoButton;
+    private boolean hasTwo = false;
+
+    private static JButton threeButton;
+    private boolean hasThree = false;
+
     private boolean hasTyped = false;
+//    private boolean hasPressed = false;
+    private boolean hasPressed;
+
 
 
     public static void main(String[] args) {
@@ -36,7 +55,7 @@ public class controlPanel extends GraphicsProgram {
     }
 
     public void run() {
-        addActionListeners();
+//        addActionListeners();
         addKeyListeners();
         setTitle("KType");
         this.resize(1000, 600);
@@ -51,47 +70,71 @@ public class controlPanel extends GraphicsProgram {
     }
 
     public void setUpMenu(){
-        GRoundRect rectMenu = new GRoundRect(960,30);
+        hasTyped = false;
+
+        GRoundRect rectMenu = new GRoundRect(700,30);
         rectMenu.setFilled(true);
         rectMenu.setFillColor(Color.DARK_GRAY);
         rectMenu.setVisible(true);
-        add(rectMenu,20,20);
+        add(rectMenu,155,50);
 
         punctButton = new JButton("punctuation");
-        punctButton.setBackground(Color.darkGray);
-        punctButton.setSize(120, 30);
-        if(hasPunc){
-            punctButton.setForeground(Color.YELLOW);
-        }else{
-            punctButton.setForeground(Color.WHITE);
-        }
-        punctButton.setOpaque(true);
-        punctButton.setBorderPainted(false);
-        punctButton.setFocusPainted(false);
-        add(punctButton,30,20);
+        setUpButton(punctButton,hasPunc);
+        punctButton.setSize(140, 30);
+        add(punctButton,160,50);
 
         numButton = new JButton("numbers");
-        numButton.setBackground(Color.darkGray);
-        numButton.setSize(120, 30);
-        if(hasNumbers){
-            numButton.setForeground(Color.YELLOW);
-        }else{
-            numButton.setForeground(Color.WHITE);
-        }
-        numButton.setOpaque(true);
-        numButton.setBorderPainted(false);
-        numButton.setFocusPainted(false);
-        add(numButton,130,20);
+        setUpButton(numButton,hasNumbers);
+        numButton.setSize(100, 30);
+        add(numButton,290,50);
 
+        timerButton = new JButton("time");
+        setUpButton(timerButton,hasTimer);
+        timerButton.setSize(90,30);
+        add(timerButton,410,50);
+
+        wordsButton = new JButton("words");
+        setUpButton(wordsButton,hasWords);
+        wordsButton.setSize(90,30);
+        add(wordsButton,490,50);
+
+        oneButton = new JButton("10");
+        setUpButton(oneButton,hasOne);
+        oneButton.setSize(60,30);
+        add(oneButton,610,50);
+
+        twoButton = new JButton("33");
+        setUpButton(twoButton,hasTwo);
+        twoButton.setSize(60,30);
+        add(twoButton,670,50);
+
+        threeButton = new JButton("66");
+        setUpButton(threeButton,hasThree);
+        threeButton.setSize(60,30);
+        add(threeButton,730,50);
+
+
+        timerCnt = 0;
         addActionListeners();
     }
 
+    public void setUpButton(JButton button,boolean isOn){
+        button.setBackground(Color.darkGray);
+        button.setOpaque(true);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setFont(new Font("Courier", Font.PLAIN, 13));
+
+        if(isOn) button.setForeground(Color.YELLOW);
+        else button.setForeground(Color.WHITE);
+    }
+
     public void printWords() throws FileNotFoundException, InterruptedException {
+        System.out.println("printing" + hasPressed);
+        addActionListeners();
         displayGrid = typingScreen.setUpWords(isRandom,hasNumbers,hasPunc);
-        time = typingScreen.setUpTime();
         int x = 80, y = 200;
         int tlength = 0, twidth = 0;
-
         for (int i = 0; i < 3; i++) {
             tlength = x;
             for (int j = 0; j < displayGrid[i].size(); j++) {
@@ -100,22 +143,57 @@ public class controlPanel extends GraphicsProgram {
             }
             twidth += displayGrid[i].get(0).getHeight();
         }
+        time = typingScreen.setUpTime();
+        time.setLabel(timerCnt+"");
         add(time, 160, 170);
+        if(hasPressed){
+            System.out.println("hi");
+        }
+        while(true){
+            System.out.print("");
+            if(hasTyped || hasPressed){
+//                hasPressed = false;
+                break;
+            }
+        }
+//        System.out.println(displayGrid[0].get(0));
+
+        while(hasTyped && timerCnt<=20){
+            Thread.sleep(1000);
+            timerCnt++;
+            time.setLabel(timerCnt+"");
+            if(hasPressed) break;
+        }
+//        System.out.println("outta here");
+//        System.out.println(typingScreen.getWordCnt());
+//        removeAll();
 //        while(true){
 //            System.out.print("");
 //            if(hasTyped){
+//                while(timerCnt<=20){
+//                    Thread.sleep(1000);
+//                    timerCnt++;
+//                    time.setLabel(timerCnt+"");
+//                }
+//                System.out.println(typingScreen.getWordCnt());
+//                removeAll();
+//            break;
+//            }
+//            if(hasPressed){
 //                break;
 //            }
 //        }
-//        while(timerCnt<=20){
-//            Thread.sleep(1000);
-//            timerCnt++;
-//            time.setLabel(timerCnt+"");
-//        }
-//        System.out.println(typingScreen.getWordCnt());
-//        removeAll();
+//        System.out.println("exit pw");
     }
 
+    public void startTimer() throws InterruptedException {
+        while(timerCnt <= 20){
+            Thread.sleep(1000);
+            timerCnt++;
+            time.setLabel(timerCnt+"");
+            if(hasPressed) break;
+        }
+    }
 
     public void updateLine(int line) {
         for (int i = 0; i < displayGrid[line].size(); i++) {
@@ -160,7 +238,9 @@ public class controlPanel extends GraphicsProgram {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if(command.equals("punctuation")){
-            System.out.println("ounc");
+            hasPressed = true;
+            System.out.println(hasPressed);
+            System.out.println("punc");
             hasPunc = !hasPunc;
             removeAll();
             setUpMenu();
@@ -172,8 +252,77 @@ public class controlPanel extends GraphicsProgram {
                 throw new RuntimeException(ex);
             }
         }else if(command.equals("numbers")){
+            hasPressed = true;
             System.out.println("number");
             hasNumbers = !hasNumbers;
+            removeAll();
+            setUpMenu();
+            try {
+                printWords();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        }else if(command.equals("time")){
+            hasPressed = true;
+            hasTimer = true;
+            hasWords = false;
+            removeAll();
+            setUpMenu();
+            try {
+                printWords();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        }else if(command.equals("words")){
+            hasPressed = true;
+            hasTimer = false;
+            hasWords = true;
+            removeAll();
+            setUpMenu();
+            try {
+                printWords();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        }else if(command.equals("10")){
+            hasPressed = true;
+            hasOne = true;
+            hasTwo = false;
+            hasThree = false;
+            removeAll();
+            setUpMenu();
+            try {
+                printWords();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        }else if(command.equals("33")){
+            hasPressed = true;
+            hasOne = false;
+            hasTwo = true;
+            hasThree = false;
+            removeAll();
+            setUpMenu();
+            try {
+                printWords();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        }else if(command.equals("66")){
+            hasPressed = true;
+            hasOne = false;
+            hasTwo = false;
+            hasThree = true;
             removeAll();
             setUpMenu();
             try {
