@@ -11,8 +11,12 @@ y11 CS end of year project
 - [x] update new line
 - [ ] missing or extra characters
 - [x] add timer
-- [ ] timer and game modes
+- [x] timer and game modes
+- [ ] extra words (not 10)
+- [ ] tab + enter to change tests
 
 **other**
+- [ ] end page 
 - [ ] high score table
 - [ ] multi-player
+      
