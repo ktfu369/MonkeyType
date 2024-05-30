@@ -51,11 +51,9 @@ public class findWords {
                 wordList[i-1] = "" +randNum;
             }
         }
-        System.out.println(wordList.length);
     }
 
     public static String[] getWords(){
-        System.out.println(wordList);
         return wordList;
     }
 

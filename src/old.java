@@ -2,7 +2,6 @@ import acm.graphics.GLabel;
 import acm.graphics.GRoundRect;
 import acm.program.GraphicsProgram;
 
-import javax.crypto.spec.PSource;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class controlPanel extends GraphicsProgram {
+public class old extends GraphicsProgram {
     int gridLinesLeft;
     public static typingTest typingScreen;
 
@@ -36,13 +35,13 @@ public class controlPanel extends GraphicsProgram {
     private static JButton threeButton;
 
     private boolean hasTyped = false;
-//    private boolean hasPressed = false;
+    //    private boolean hasPressed = false;
     private boolean hasPressed;
 
 
 
     public static void main(String[] args) {
-        new controlPanel().start(args);
+        new old().start(args);
     }
 
     public void init() {
@@ -152,24 +151,24 @@ public class controlPanel extends GraphicsProgram {
         time = typingScreen.setUpTime();
         time.setLabel(timerCnt+"");
         add(time, 160, 170);
-        if(hasPressed){
-            System.out.println("hi");
-        }
-        while(true){
-            System.out.print("");
-            if(hasTyped || hasPressed){
-//                hasPressed = false;
-                break;
-            }
-        }
-//        System.out.println(displayGrid[0].get(0));
 
-        while(hasTyped && timerCnt<=20){
-            Thread.sleep(1000);
-            timerCnt++;
-            time.setLabel(timerCnt+"");
-            if(hasPressed) break;
-        }
+
+
+//        while(true){
+//            System.out.print("");
+//            if(hasTyped || hasPressed){
+////                hasPressed = false;
+//                break;
+//            }
+//        }
+////        System.out.println(displayGrid[0].get(0));
+//
+//        while(hasTyped && timerCnt<=20){
+//            Thread.sleep(1000);
+//            timerCnt++;
+//            time.setLabel(timerCnt+"");
+//            if(hasPressed) break;
+//        }
 //        System.out.println("outta here");
 //        System.out.println(typingScreen.getWordCnt());
 //        removeAll();

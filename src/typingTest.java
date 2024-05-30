@@ -26,8 +26,11 @@ public class typingTest{
     private static int wordCnt=0;
     private static int corChar = 0, incorChar = 0, extraChar = 0, missedChar = 0;
 
+    Color MYBLUE = new Color(0,100,148);
+    Color MYRED = new Color(128,0,0);
 
     public ArrayList<GLabel>[] setUpWords(boolean hasNumbers, boolean hasPunctuation, boolean hasTimer, boolean hasWords, int choice) throws FileNotFoundException {
+
         cursorX =0;
         cursorY = 0;
         findWord = new findWords(hasNumbers,hasPunctuation,hasTimer,hasWords,choice);
@@ -50,7 +53,6 @@ public class typingTest{
         }
 
         int ypos = 0;
-        System.out.println(selectedWords);
         for(int i=0;i<selectedWords.length;i++){
             if(wordGrid[ypos].size() + selectedWords[i].length() >= 50){
                 ypos++;
@@ -126,9 +128,9 @@ public class typingTest{
             wordCnt++;
         }
         if(typed.equals(displayGrid[cursorY].get(cursorX).getLabel())){
-            displayGrid[cursorY].get(cursorX).setColor(Color.BLUE);
+            displayGrid[cursorY].get(cursorX).setColor(MYBLUE);
         }else{
-            displayGrid[cursorY].get(cursorX).setColor(Color.RED);
+            displayGrid[cursorY].get(cursorX).setColor(MYRED);
         }
         displayGrid[cursorY].get(cursorX).setLabel(typed);
         cursorX++;
