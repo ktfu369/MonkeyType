@@ -1,4 +1,5 @@
 import acm.graphics.GLabel;
+import acm.graphics.GRect;
 import acm.program.*;
 
 import java.awt.*;
@@ -24,15 +25,22 @@ public class typingTest{
     private static findWords findWord;
 
     private static int wordCnt=0;
-    private static int corChar = 0, incorChar = 0, extraChar = 0, missedChar = 0;
+    private static int corChar = 0, incorChar = 0;
+    private static int lastX = -1, lastY = -1;
+
+    private GRect cursor;
 
     Color MYBLUE = new Color(0,100,148);
     Color MYRED = new Color(128,0,0);
 
     public ArrayList<GLabel>[] setUpWords(boolean hasNumbers, boolean hasPunctuation, boolean hasTimer, boolean hasWords, int choice) throws FileNotFoundException {
-
-        cursorX =0;
+        curLine = 0;
+        cursorX = 0;
         cursorY = 0;
+        wordCnt = 0;
+        lastX = -1;
+        lastY = -1;
+
         findWord = new findWords(hasNumbers,hasPunctuation,hasTimer,hasWords,choice);
         wordGrid = sortGrid();
         return showWords();
@@ -44,6 +52,7 @@ public class typingTest{
         time.setColor(Color.GRAY);
         return time;
     }
+
     // splits into lines with max of 50 characters
     public ArrayList<Character>[] sortGrid(){
         String[] selectedWords = findWord.getWords();
@@ -53,15 +62,15 @@ public class typingTest{
         }
 
         int ypos = 0;
+        int cnt=1;
         for(int i=0;i<selectedWords.length;i++){
             if(wordGrid[ypos].size() + selectedWords[i].length() >= 50){
                 ypos++;
-            }else{
-                for(int j=0;j<selectedWords[i].length();j++){
-                    wordGrid[ypos].add(selectedWords[i].charAt(j));
-                }
-                wordGrid[ypos].add(' ');
             }
+            for(int j=0;j<selectedWords[i].length();j++){
+                wordGrid[ypos].add(selectedWords[i].charAt(j));
+            }
+            wordGrid[ypos].add(' ');
         }
         gridMax = ypos;
         return wordGrid;
@@ -114,6 +123,38 @@ public class typingTest{
         return gridMax;
     }
 
+    public int getCursorX(){
+        return cursorX;
+    }
+
+    public int getCursorY(){
+        return cursorY;
+    }
+
+    public int getCharCur(){
+        return incorChar + corChar;
+    }
+
+    public int getCharTotal(){
+        return findWords.getCharTotal();
+    }
+
+    public int getCorChar(){
+        return corChar;
+    }
+
+    public int getIncorChar(){
+        return incorChar;
+    }
+
+    public int getLastX(){
+        return lastX;
+    }
+
+    public int getLastY(){
+        return lastY;
+    }
+
     public void backspace(){
         if(cursorX>0){
             cursorX--;
@@ -127,6 +168,7 @@ public class typingTest{
         if(typed.equals(" ")){
             wordCnt++;
         }
+//        cursor.setLocation(cursor.getX()+1,cursor.getY());
         if(typed.equals(displayGrid[cursorY].get(cursorX).getLabel())){
             displayGrid[cursorY].get(cursorX).setColor(MYBLUE);
         }else{
@@ -135,18 +177,33 @@ public class typingTest{
         displayGrid[cursorY].get(cursorX).setLabel(typed);
         cursorX++;
         if(cursorX>=displayGrid[cursorY].size()){
+            countRightWrong();
+
             curLine++;
             cursorX=0;
             if(cursorY!=1){
                 cursorY++;
+                if(curLine == gridMax){
+                    lastY = cursorY;
+                    lastX = displayGrid[cursorY].size() - 1;
+                }
             }else{
+                if(curLine == gridMax){
+                    lastY = cursorY;
+                    lastX = displayGrid[cursorY].size() - 1;
+                }
                 return true;
             }
         }
         return false;
     }
 
-
-
+    public void countRightWrong(){
+        for(int i=0;i<displayGrid[cursorY].size();i++){
+            if(displayGrid[cursorY].get(i).getLabel().equals(" ")) continue;
+            if(displayGrid[cursorY].get(i).getColor()==MYBLUE) corChar++;
+            else if(displayGrid[cursorY].get(i).getColor()==MYRED) incorChar++;
+        }
+    }
 
 }

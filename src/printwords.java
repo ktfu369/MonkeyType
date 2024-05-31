@@ -36,7 +36,7 @@ public class printwords extends GraphicsProgram implements ActionListener  {
     private static int corChar = 0, incorChar = 0, extraChar = 0, missedChar = 0;
 
     public void run() {
-        this.resize(1000,600);
+        this.resize(1000,500);
         wordGrid = sortGrid();
         showWords();
         addKeyListeners();

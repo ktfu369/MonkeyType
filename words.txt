@@ -66,8 +66,6 @@ affair
 affect
 afford
 afraid
-African
-African-American
 after
 afternoon
 again
@@ -85,7 +83,6 @@ ah
 ahead
 aid
 aide
-AIDS
 aim
 air
 aircraft
@@ -107,9 +104,7 @@ alter
 alternative
 although
 always
-AM
 amazing
-American
 among
 amount
 analysis
@@ -153,7 +148,6 @@ appropriate
 approval
 approve
 approximately
-Arab
 architect
 area
 argue
@@ -173,7 +167,6 @@ article
 artist
 artistic
 as
-Asian
 aside
 ask
 asleep
@@ -242,6 +235,7 @@ basically
 basis
 basket
 basketball
+bath
 bathroom
 battery
 battle
@@ -280,7 +274,6 @@ bet
 better
 between
 beyond
-Bible
 big
 bike
 bill
@@ -327,6 +320,7 @@ boyfriend
 brain
 branch
 brand
+brave
 bread
 break
 breakfast
@@ -340,7 +334,6 @@ briefly
 bright
 brilliant
 bring
-British
 broad
 broken
 brother
@@ -350,6 +343,7 @@ buck
 budget
 build
 building
+built
 bullet
 bunch
 burden
@@ -370,12 +364,12 @@ cable
 cake
 calculate
 call
+calm
 camera
 camp
 campaign
 campus
 can
-Canadian
 cancer
 candidate
 cap
@@ -392,6 +386,7 @@ care
 career
 careful
 carefully
+careless
 carrier
 carry
 case
@@ -400,7 +395,6 @@ cast
 cat
 catch
 category
-Catholic
 cause
 ceiling
 celebrate
@@ -409,8 +403,8 @@ celebrity
 cell
 center
 central
+centre
 century
-CEO
 ceremony
 certain
 certainly
@@ -444,16 +438,14 @@ chicken
 chief
 child
 childhood
-Chinese
 chip
 chocolate
 choice
 cholesterol
 choose
-Christian
-Christmas
 church
 cigarette
+cinema
 circle
 circumstance
 cite
@@ -477,6 +469,7 @@ clock
 close
 closely
 closer
+cloth
 clothes
 clothing
 cloud
@@ -491,6 +484,7 @@ coat
 code
 coffee
 cognitive
+coin
 cold
 collapse
 colleague
@@ -500,6 +494,7 @@ collective
 college
 colonial
 color
+colour
 column
 combination
 combine
@@ -555,7 +550,6 @@ confirm
 conflict
 confront
 confusion
-Congress
 congressional
 connect
 connection
@@ -616,6 +610,7 @@ corporation
 correct
 correspondent
 cost
+cottage
 cotton
 couch
 could
@@ -713,7 +708,6 @@ deliver
 delivery
 demand
 democracy
-Democrat
 democratic
 demonstrate
 demonstration
@@ -798,11 +792,11 @@ diversity
 divide
 division
 divorce
-DNA
 do
 doctor
 document
 dog
+dollar
 domestic
 dominant
 dominate
@@ -876,7 +870,6 @@ eliminate
 elite
 else
 elsewhere
-e-mail
 embrace
 emerge
 emergency
@@ -901,7 +894,6 @@ engage
 engine
 engineer
 engineering
-English
 enhance
 enjoy
 enormous
@@ -934,7 +926,6 @@ estimate
 etc
 ethics
 ethnic
-European
 evaluate
 evaluation
 even
@@ -1028,6 +1019,7 @@ father
 fault
 favor
 favorite
+favourite
 fear
 feature
 federal
@@ -1114,7 +1106,6 @@ framework
 free
 freedom
 freeze
-French
 frequency
 frequent
 frequently
@@ -1161,9 +1152,9 @@ generally
 generate
 generation
 genetic
+gentle
 gentleman
 gently
-German
 gesture
 get
 ghost
@@ -1181,7 +1172,6 @@ global
 glove
 go
 goal
-God
 gold
 golden
 golf
@@ -1203,6 +1193,7 @@ gray
 great
 greatest
 green
+grey
 grocery
 ground
 group
@@ -1310,7 +1301,7 @@ hunting
 hurt
 husband
 hypothesis
-I
+i
 ice
 idea
 ideal
@@ -1335,6 +1326,7 @@ impact
 implement
 implication
 imply
+import
 importance
 important
 impose
@@ -1360,7 +1352,6 @@ indeed
 independence
 independent
 index
-Indian
 indicate
 indication
 individual
@@ -1376,10 +1367,12 @@ ingredient
 initial
 initially
 initiative
+injure
 injury
 inner
 innocent
 inquiry
+insect
 inside
 insight
 insist
@@ -1395,6 +1388,7 @@ instrument
 insurance
 intellectual
 intelligence
+intelligent
 intend
 intense
 intensity
@@ -1405,7 +1399,6 @@ interested
 interesting
 internal
 international
-Internet
 interpret
 interpretation
 intervention
@@ -1424,24 +1417,16 @@ invite
 involve
 involved
 involvement
-Iraqi
-Irish
 iron
-Islamic
 island
-Israeli
 issue
 it
-Italian
 item
 its
 itself
 jacket
 jail
-Japanese
 jet
-Jew
-Jewish
 job
 join
 joint
@@ -1491,7 +1476,6 @@ largely
 last
 late
 later
-Latin
 latter
 laugh
 launch
@@ -1551,6 +1535,7 @@ literary
 literature
 little
 live
+live
 living
 load
 loan
@@ -1559,7 +1544,6 @@ locate
 location
 lock
 long
-long-term
 look
 loose
 lose
@@ -1648,7 +1632,6 @@ message
 metal
 meter
 method
-Mexican
 middle
 might
 military
@@ -1699,9 +1682,6 @@ mouth
 move
 movement
 movie
-Mr
-Mrs
-Ms
 much
 multiple
 murder
@@ -1710,7 +1690,6 @@ museum
 music
 musical
 musician
-Muslim
 must
 mutual
 my
@@ -1775,7 +1754,6 @@ notion
 novel
 now
 nowhere
-n't
 nuclear
 number
 numerous
@@ -1812,7 +1790,6 @@ oil
 ok
 okay
 old
-Olympic
 on
 once
 one
@@ -1873,12 +1850,12 @@ painter
 painting
 pair
 pale
-Palestinian
 palm
 pan
 panel
 pant
 paper
+parcel
 parent
 park
 parking
@@ -1904,11 +1881,13 @@ pattern
 pause
 pay
 payment
-PC
 peace
+peaceful
 peak
 peer
+pen
 penalty
+pencil
 people
 pepper
 per
@@ -1932,6 +1911,7 @@ personnel
 perspective
 persuade
 pet
+petrol
 phase
 phenomenon
 philosophy
@@ -1954,7 +1934,9 @@ pine
 pink
 pipe
 pitch
+pity
 place
+plain
 plan
 plane
 planet
@@ -1965,12 +1947,12 @@ plate
 platform
 play
 player
+pleasant
 please
 pleasure
 plenty
 plot
 plus
-PM
 pocket
 poem
 poet
@@ -2015,6 +1997,7 @@ power
 powerful
 practical
 practice
+practise
 pray
 prayer
 precisely
@@ -2054,6 +2037,7 @@ prison
 prisoner
 privacy
 private
+prize
 probably
 problem
 procedure
@@ -2210,6 +2194,7 @@ remember
 remind
 remote
 remove
+repair
 repeat
 repeatedly
 replace
@@ -2219,7 +2204,6 @@ reporter
 represent
 representation
 representative
-Republican
 reputation
 request
 require
@@ -2287,7 +2271,6 @@ run
 running
 rural
 rush
-Russian
 sacred
 sad
 safe
@@ -2348,7 +2331,6 @@ select
 selection
 self
 sell
-Senate
 senator
 send
 senior
@@ -2438,6 +2420,7 @@ size
 ski
 skill
 skin
+skirt
 sky
 slave
 sleep
@@ -2489,9 +2472,7 @@ soup
 source
 south
 southern
-Soviet
 space
-Spanish
 speak
 speaker
 special
@@ -2507,6 +2488,7 @@ spin
 spirit
 spiritual
 split
+spoil
 spokesman
 sport
 spot
@@ -2601,7 +2583,6 @@ support
 supporter
 suppose
 supposed
-Supreme
 sure
 surely
 surface
@@ -2674,7 +2655,7 @@ territory
 terror
 terrorism
 terrorist
-old
+test
 testify
 testimony
 testing
@@ -2731,6 +2712,7 @@ tobacco
 today
 toe
 together
+toilet
 tomato
 tomorrow
 tone
@@ -2792,7 +2774,6 @@ try
 tube
 tunnel
 turn
-TV
 twelve
 twenty
 twice
@@ -2815,7 +2796,6 @@ uniform
 union
 unique
 unit
-United
 universal
 universe
 university

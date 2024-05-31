@@ -6,7 +6,9 @@ public class findWords {
     private static boolean hasNumbers, hasPunctuation;
     private static boolean hasTimer, hasWords;
     private static int choice;
-    private static int choices[] = {0,20,33,66};
+    private static int choices[] = {0,10,33,66};
+
+    private static int charTotal = 0;
 
     private static String[] wordList;
 
@@ -17,6 +19,7 @@ public class findWords {
         this.hasTimer = hasTimer;
         this.hasWords = hasWords;
         this.choice = choice;
+        this.charTotal = 0;
 
         if(hasWords){
             wordList = new String[choices[choice]];
@@ -42,6 +45,8 @@ public class findWords {
         for(int i=1;i<=max;i++){
             int randIndex = rand.nextInt(fileLength("words.txt"));
             wordList[i-1] = wordArray[randIndex];
+            charTotal += wordArray[randIndex].length();
+
             if(hasPunctuation && i%12==0){
                 int randPunc = rand.nextInt(fileLength("punctuation.txt"));
                 wordList[i-1] += puncArray[randPunc];
@@ -55,6 +60,10 @@ public class findWords {
 
     public static String[] getWords(){
         return wordList;
+    }
+
+    public static int getCharTotal(){
+        return charTotal;
     }
 
     public static String[] fileToArray(String fileName) throws FileNotFoundException{

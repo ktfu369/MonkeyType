@@ -1,4 +1,5 @@
 import acm.graphics.GLabel;
+import acm.graphics.GRect;
 import acm.graphics.GRoundRect;
 import acm.program.GraphicsProgram;
 
@@ -6,7 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,16 +35,21 @@ public class menuRun extends GraphicsProgram {
     private boolean hasWords = false;
 
     private static int menuChoice = 1;
+    int choices[] = {0,10,33,66};
     private static JButton oneButton;
     private static JButton twoButton;
     private static JButton threeButton;
 
+    private static JButton reset;
+
     private boolean hasTyped = false;
     private boolean hasPressed = false;
+//    private boolean pressTab = false;
 
-    private Timer gameTimer;
-    private TimerTask timerTask;
+    private int endReq;
+    private GRect cursor;
 
+    Color MYYELLOW = new Color(255,209,0);
 
     public static void main(String[] args) {
         new menuRun().start(args);
@@ -64,6 +73,12 @@ public class menuRun extends GraphicsProgram {
     public void setUpMenu(){
         // displays gray menu bar and buttons on top
         hasTyped = false;
+//        pressTab = false;
+
+        GLabel logo = new GLabel("ktype");
+        logo.setFont(new Font("Avenir Next",Font.PLAIN,20));
+        logo.setColor(MYYELLOW);
+        add(logo,20,30);
 
         GRoundRect rectMenu = new GRoundRect(700,30);
         rectMenu.setFilled(true);
@@ -106,6 +121,13 @@ public class menuRun extends GraphicsProgram {
         threeButton.setSize(60,30);
         add(threeButton,730,50);
 
+        reset = new JButton("reset");
+        reset.setForeground(MYYELLOW);
+        reset.setBorderPainted(false);
+        reset.setFocusPainted(false);
+        reset.setFont(new Font("Courier", Font.PLAIN,22));
+        add(reset,450,350);
+
         addActionListeners();
     }
 
@@ -118,24 +140,33 @@ public class menuRun extends GraphicsProgram {
         button.setFocusPainted(false);
         button.setFont(new Font("Courier", Font.PLAIN, 13));
 
-        if(isOn) button.setForeground(Color.YELLOW);
+        if(isOn) button.setForeground(MYYELLOW);
         else button.setForeground(Color.WHITE);
     }
 
     public void printWords() throws FileNotFoundException, InterruptedException {
+        cursor = new GRect(1,24);
+        cursor.setFilled(true);
+        cursor.setColor(MYYELLOW);
+        cursor.setVisible(true);
+        add(cursor,159,176);
+
         addActionListeners();
 
         displayGrid = typingScreen.setUpWords(hasNumbers,hasPunc,hasTimer,hasWords,menuChoice);
         gridLinesLeft = typingScreen.getGridMax();
+        if(hasTimer){
+            endReq = choices[menuChoice];
+        }else{
+            endReq = typingScreen.getCharTotal();
+        }
 
         int x = 80, y = 200;
         int tlength = 0, twidth = 0;
 
-        int maxLine;
-        if(gridLinesLeft < 3) maxLine = gridLinesLeft;
-        else maxLine = 3;
+        int maxLine = Math.min(gridLinesLeft,2);
 
-        for (int i = 0; i < maxLine; i++) {
+        for (int i = 0; i <= maxLine; i++) {
             tlength = x;
             for (int j = 0; j < displayGrid[i].size(); j++) {
                 add(displayGrid[i].get(j), x + tlength, y + twidth);
@@ -152,9 +183,9 @@ public class menuRun extends GraphicsProgram {
         add(time, 160, 170);
 
         AtomicInteger timeCount = new AtomicInteger();
-        timeCount.set(0);
-        java.util.Timer timer = new java.util.Timer();
 
+        java.util.Timer timer = new java.util.Timer();
+        timeCount.set(0);
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -165,14 +196,19 @@ public class menuRun extends GraphicsProgram {
                     int currentTime = timeCount.incrementAndGet();
                     time.setLabel(currentTime + "");
 
-                    System.out.println("timer " + currentTime);
-                    if (currentTime == 20) {
+                    if (hasTimer && currentTime == endReq) {
                         timer.cancel();
                         timer.purge();
-                        System.out.println("DONE");
-                        removeAll();
+                        endingPage(choices[menuChoice]);
                         return;
                     }
+                    if(hasWords && typingScreen.getLastX() == typingScreen.getCursorX() && typingScreen.getLastY() == typingScreen.getCursorY()){
+                        timer.cancel();
+                        timer.purge();
+                        endingPage(currentTime);
+                        return;
+                    }
+
                 }
                 if (hasPressed) {
                     hasPressed = false;
@@ -216,6 +252,9 @@ public class menuRun extends GraphicsProgram {
             case KeyEvent.VK_BACK_SPACE:
                 typingScreen.backspace();
                 break;
+            case KeyEvent.VK_ENTER:
+                restartTyping();
+                break;
             default:
                 hasTyped = true;
                 if (typingScreen.typed(keyPressed.getKeyChar() + "")) {
@@ -227,6 +266,11 @@ public class menuRun extends GraphicsProgram {
                     gridLinesLeft --;
                 }
         }
+        int cursorX = typingScreen.getCursorX();
+        int cursorY = typingScreen.getCursorY();
+        int newX = (int)displayGrid[cursorY].get(cursorX).getX();
+        int newY = (int)displayGrid[cursorY].get(cursorX).getY() - 24;
+        cursor.setLocation(newX-1,newY);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -261,6 +305,8 @@ public class menuRun extends GraphicsProgram {
             hasPressed = true;
             menuChoice = 3;
             restartTyping();
+        }else if(command.equals("reset")){
+            restartTyping();
         }
     }
 
@@ -276,8 +322,102 @@ public class menuRun extends GraphicsProgram {
         }
     }
 
-    public void endingPage(){
+    public void endingPage(int timeTaken){
         removeAll();
-        JButton end = new JButton();
+        int wordCnt = typingScreen.getWordCnt();
+        System.out.println(wordCnt);
+
+        GLabel logo = new GLabel("ktype");
+        logo.setFont(new Font("Avenir Next",Font.PLAIN,20));
+        logo.setColor(MYYELLOW);
+        add(logo,20,30);
+
+        int netWPM = (int)(wordCnt * 60/timeTaken);
+        System.out.println("time taken: "+timeTaken);
+        System.out.println("WPM Net: "+netWPM);
+
+        GLabel text1 = new GLabel("raw");
+        text1.setColor(Color.GRAY);
+        text1.setFont(new Font("Courier", Font.PLAIN,30));
+        add(text1,100,230);
+        GLabel netWPMLabel = new GLabel(netWPM + "");
+        netWPMLabel.setFont(new Font("Courier", Font.PLAIN,50));
+        netWPMLabel.setColor(MYYELLOW);
+        add(netWPMLabel,100,290);
+
+
+        int corChar = typingScreen.getCorChar();
+        int incorChar = typingScreen.getIncorChar();
+        int accuracy = 100 * corChar / (corChar + incorChar);
+
+        GLabel text2 = new GLabel("acc");
+        text2.setColor(Color.GRAY);
+        text2.setFont(new Font("Courier", Font.PLAIN,30));
+        add(text2,300,230);
+        GLabel accLabel = new GLabel(accuracy + "%");
+        accLabel.setFont(new Font("Courier", Font.PLAIN,50));
+        accLabel.setColor(MYYELLOW);
+        add(accLabel,300,290);
+
+        GLabel text3 = new GLabel("correct");
+        text3.setColor(Color.GRAY);
+        text3.setFont(new Font("Courier", Font.PLAIN,30));
+        add(text3,500,230);
+        GLabel corr = new GLabel(corChar + "");
+        corr.setFont(new Font("Courier", Font.PLAIN,50));
+        corr.setColor(MYYELLOW);
+        add(corr,500,290);
+
+        GLabel text4 = new GLabel("incorrect");
+        text4.setColor(Color.GRAY);
+        text4.setFont(new Font("Courier", Font.PLAIN,30));
+        add(text4,700,230);
+        GLabel incorr = new GLabel(incorChar + "");
+        incorr.setFont(new Font("Courier", Font.PLAIN,50));
+        incorr.setColor(MYYELLOW);
+        add(incorr,700,290);
+
+        int wpm = netWPM * accuracy/100;
+        GLabel text5 = new GLabel("wpm");
+        text5.setColor(Color.GRAY);
+        text5.setFont(new Font("Courier", Font.PLAIN,30));
+        add(text5,100,100);
+        GLabel wpmLabel = new GLabel(wpm + "");
+        wpmLabel.setFont(new Font("Courier", Font.PLAIN,50));
+        wpmLabel.setColor(MYYELLOW);
+        add(wpmLabel,100,160);
+
+        String testType = "";
+        if(hasWords) testType += "words ";
+        else testType += "time ";
+        testType += choices[menuChoice];
+        GLabel text6 = new GLabel("test type");
+        text6.setColor(Color.GRAY);
+        text6.setFont(new Font("Courier", Font.PLAIN,30));
+        add(text6,300,100);
+        GLabel testLabel = new GLabel(testType);
+        testLabel.setFont(new Font("Courier", Font.PLAIN,50));
+        testLabel.setColor(MYYELLOW);
+        add(testLabel,300,160);
+
+        add(reset,850,380);
+        try{
+            updateHighScore(wpm,accuracy);
+        }
+        catch(Exception e){
+        }
+
+    }
+
+    public void updateHighScore(int wpm, int accuracy) throws IOException {
+        File file = new File("highScore.txt");
+        FileWriter fr = new FileWriter(file,true);
+        String ans = "";
+        if(hasWords) ans += "words ";
+        else ans += "time ";
+        ans += choices[menuChoice] + ", ";
+        ans += wpm + ", " + accuracy + "%\n";
+        fr.write(ans);
+        fr.close();
     }
 }
